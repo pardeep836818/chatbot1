@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<!-- saved from url=(0087)file:///C:/Users/HP/AppData/Local/Microsoft/Windows/INetCache/IE/7RJ6PXGI/index[1].html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>Health Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        #chat-container {
+            width: 450px;
+            margin: 20px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+
+        #chat-header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px;
+            text-align: center;
+            font-size: 18px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        #chat-messages {
+            padding: 15px;
+            height: 500px;
+            overflow-y: scroll;
+        }
+
+        .message {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+
+        .user-message {
+            background-color: #007bff;
+            color: #fff;
+            text-align: right;
+        }
+
+        .bot-message {
+            background-color: #4caf50;
+            color: #fff;
+        }
+
+        #user-input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+            font-size: 14px;
+        }
+
+        #send-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        #box-input{
+            display: flex;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div id="chat-container">
+        <div id="chat-header">
+            ChitChat Chatbot
+        </div>
+        <div id="chat-messages">
+            <div class="message bot-message">Hello! How can I assist you with your questions?</div>
+        </div>
+        <div id="box-input">
+            <input type="text" id="user-input" placeholder="Type your question...">
+            <button id="send-button" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const chatbox = document.getElementById('chat-messages');
+        const userInput = document.getElementById('user-input');
+
+        function sendMessage() {
+            const userMessage = userInput.value;
+            if (userMessage.trim() === '') return;
+
+            // Display user message in the chatbox
+            appendMessage('You', userMessage);
+
+            // Check user's question and provide relevant answer
+            const botResponse = getBotResponse(userMessage);
+            appendMessage('Chatbot', botResponse);
+
+            // Clear the user input field
+            userInput.value = '';
+        }
+
+        function getBotResponse(userMessage) {
+            // Predefined questions and answers
+            const qaPairs = [
+                {
+                    question: 'Hi',
+                    answer: 'Hello, How are you ?'
+                },
+                {
+                    question: 'Hello',
+                    answer: 'Hello How are you ?'
+                },
+                {
+                    question: 'How are you',
+                    answer: 'I am good what about you ?'
+                },
+                {
+                    question: "What is your name?",
+                    answer: "I am a chatbot. You can call me ChitChat."
+                },
+                {
+                    question: "How are you?",
+                    answer: "I'm just a computer program, so I don't have feelings, but I'm here to assist you."
+                },
+                {
+                    question: "What's the weather like today?",
+                    answer: "I'm sorry, I don't have access to real-time weather data. You can check a weather website or app for the current conditions."
+                },
+                {
+                    question: "Tell me a joke.",
+                    answer: "Sure, here's one: Why did the computer keep freezing? Because it left its Windows open!"
+                },
+                {
+                    question: "What time is it?",
+                    answer: "I don't have access to real-time time information, but you can check the time on your device or by asking a voice assistant."
+                },
+                {
+                    question: "How do I reset my password?",
+                    answer: "To reset your password, visit the 'Forgot Password' page on the website or app you're using and follow the instructions."
+                },
+                {
+                    question: "What's the capital of France?",
+                    answer: "The capital of France is Paris."
+                },
+                {
+                    question: "Can you recommend a good book to read?",
+                    answer: "Certainly! What genre are you interested in?"
+                },
+                {
+                    question: "How can I improve my productivity?",
+                    answer: "To improve productivity, consider setting goals, prioritizing tasks, and minimizing distractions."
+                },
+                {
+                    question: "Tell me a fun fact.",
+                    answer: "Sure, here's a fun fact: Honey never spoils. Archaeologists have found pots of honey in ancient Egyptian tombs that are over 3,000 years old and still perfectly edible!"
+                },
+                {
+                    question: "What's the best way to learn a new language?",
+                    answer: "Learning a new language takes practice. Consider taking classes, using language learning apps, and immersing yourself in the language as much as possible."
+                },
+                {
+                    question: "How do I cook a perfect omelette?",
+                    answer: "To make a perfect omelette, whisk eggs, add desired fillings, and cook in a non-stick pan over medium-low heat until set but still slightly runny in the middle. Fold it in half and serve."
+                },
+                {
+                    question: "What are some tips for job interviews?",
+                    answer: "Tips for job interviews include researching the company, dressing professionally, and practicing common interview questions."
+                },
+                {
+                    question: "How can I save money for a vacation?",
+                    answer: "To save money for a vacation, create a budget, cut unnecessary expenses, and set up a dedicated savings account."
+                },
+                {
+                    question: "What's the best way to stay healthy?",
+                    answer: "To stay healthy, maintain a balanced diet, exercise regularly, get enough sleep, and manage stress."
+                },
+                {
+                    question: "How do I start a blog?",
+                    answer: "Starting a blog involves choosing a niche, selecting a platform, creating content, and promoting your blog."
+                },
+                {
+                    question: "What's the meaning of life?",
+                    answer: "The meaning of life is a philosophical question with no single answer. It often depends on individual beliefs and values."
+                },
+                {
+                    question: "How can I become more environmentally friendly?",
+                    answer: "To be more environmentally friendly, reduce waste, conserve energy, and use eco-friendly products."
+                },
+                {
+                    question: "What's the recipe for chocolate chip cookies?",
+                    answer: "Here's a basic recipe for chocolate chip cookies: Mix flour, sugar, butter, eggs, vanilla extract, baking soda, and chocolate chips. Drop spoonfuls onto a baking sheet and bake at 350°F (175°C) for 10-12 minutes."
+                },
+                {
+                    question: 'Fine',
+                    answer: 'Tell me about your querys.'
+                },
+                {
+                    question: 'What should I do if I have a fever?',
+                    answer: 'If you have a fever, rest, drink fluids, and consider taking over-the-counter fever reducers like acetaminophen or ibuprofen. If the fever persists, consult a healthcare professional.'
+                },
+                {
+                    question: 'How can I maintain a healthy diet?',
+                    answer: 'To maintain a healthy diet, include a variety of fruits, vegetables, lean proteins, and whole grains in your meals. Limit processed foods and sugary beverages.'
+                },
+                {
+                    question: 'What are the symptoms of COVID-19?',
+                    answer: 'Common symptoms of COVID-19 include fever, cough, shortness of breath, fatigue, loss of taste or smell, and muscle aches. If you have symptoms, get tested and follow health guidelines.'
+                },
+                {
+                    question: 'How can I reduce stress?',
+                    answer: 'Stress reduction techniques include deep breathing exercises, meditation, regular exercise, and getting enough sleep. Connecting with loved ones can also help.'
+                },
+                {
+                    question: "What's the recommended daily water intake?",
+                    answer: 'The recommended daily water intake varies but is generally around 8 glasses (64 ounces) of water per day. Individual needs may vary based on activity level and climate.'
+                },
+                {
+                    question: 'How can I quit smoking?',
+                    answer: 'To quit smoking, consider nicotine replacement therapy, counseling, or support groups. Consult a healthcare provider for a personalized quit plan.'
+                },
+                {
+                    question: 'What are the benefits of regular exercise?',
+                    answer: 'Regular exercise can improve cardiovascular health, boost mood, increase energy, and help with weight management. Aim for at least 150 minutes of moderate-intensity exercise per week.'
+                },
+                {
+                    question: 'How can I prevent the common cold?',
+                    answer: 'To prevent the common cold, practice good hand hygiene, avoid close contact with sick individuals, and consider getting a flu vaccine.'
+                },
+                {
+                    question: "What's the best way to lose weight?",
+                    answer: 'To lose weight, maintain a balanced diet, exercise regularly, and monitor portion sizes. Consult a healthcare provider or dietitian for personalized guidance.'
+                },
+                {
+                    question: 'How can I improve my sleep quality?',
+                    answer: 'To improve sleep quality, establish a regular sleep schedule, create a comfortable sleep environment, limit screen time before bed, and avoid caffeine and heavy meals close to bedtime.'
+                }
+            ];
+
+            // Search for a matching question and return the corresponding answer
+            for (const qa of qaPairs) {
+                if (userMessage.toLowerCase().includes(qa.question.toLowerCase())) {
+                    return qa.answer;
+                }
+            }
+
+            // If no matching question is found, provide a generic response
+            return "I'm sorry, I don't have information on that specific question. Please try asking something else.";
+        }
+
+        function appendMessage(sender, message) {
+            if (sender == "You") {
+                const messageDiv = document.createElement('div');
+                messageDiv.innerHTML = `<div style="border-right:5px solid gray;padding:5px;margin-bottom:3px;display:flex;justify-content:right"><strong> ${message}</strong></div>`;
+                chatbox.appendChild(messageDiv);
+                chatbox.scrollTop = chatbox.scrollHeight;
+            }
+            else {
+                const messageDiv = document.createElement('div');
+                messageDiv.innerHTML = `<div style="border-left:5px solid green;padding:5px;margin-bottom:3px"> ${message}</div>`;
+                chatbox.appendChild(messageDiv);
+                chatbox.scrollTop = chatbox.scrollHeight;
+            }
+
+        }
+    </script>
+
+
+</body></html>
